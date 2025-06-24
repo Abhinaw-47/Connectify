@@ -1,0 +1,44 @@
+
+import { useEffect } from 'react'
+
+import './index.css'
+import Home from './components/Home'
+import Navbar from './components/Navbar'
+import { useDispatch } from 'react-redux'
+import { getPosts } from './actions/post'
+import {Route, Routes, BrowserRouter, Navigate} from 'react-router-dom'
+import Auth from './components/Auth'
+import { useState } from 'react'
+import Chat from './components/Chat'
+import { fetchUsers } from './actions/message'
+import NotFound from './components/NotFound'
+function App() {
+const dispatch = useDispatch()
+
+useEffect(() => {
+  dispatch(getPosts())
+  dispatch(fetchUsers())
+}, [dispatch,getPosts,fetchUsers])
+const user=JSON.parse(localStorage.getItem("profile"));
+const [showForm, setShowForm] = useState(false);
+  return (
+    <BrowserRouter>
+    <div>
+     <Navbar setShowForm={setShowForm} />
+     <div style={{ minHeight: '100vh',width:"100%"}} className='bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 '>
+     <Routes>
+       <Route path="/" element={<Navigate to="/posts"/>} />
+      <Route path="/posts" element={<Home showForm={showForm} setShowForm={setShowForm} />} />
+      {/* <Route path="/" element={<Home showForm={showForm} setShowForm={setShowForm} />}/> */}
+       <Route path="/auth"  element={user?<Home showForm={showForm} setShowForm={setShowForm} />:<Auth/>} />
+       <Route path="/posts/search" element={<Home showForm={showForm} setShowForm={setShowForm} />} />
+       <Route path='/chat' element={<Chat />} />
+       <Route path='*' element={<NotFound />} />
+     </Routes>
+     </div>
+    </div>
+    </BrowserRouter>
+  )
+}
+
+export default App
