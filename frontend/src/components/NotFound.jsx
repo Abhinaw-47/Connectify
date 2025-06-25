@@ -1,30 +1,78 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import {
+  Box,
+  Typography,
+  Button,
+  Paper,
+  useTheme,
+} from '@mui/material';
 
 const NotFound = () => {
+  const theme = useTheme();
+
   return (
-    <motion.div 
-      initial={{ opacity: 0, y: 20 }} 
-      animate={{ opacity: 1, y: 0 }} 
-      transition={{ duration: 0.6 }}
-      className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white px-6"
+    <Box
+      sx={{
+        minHeight: '100vh',
+        background: 'linear-gradient(135deg, #000000 0%, #2a003f 100%)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        px: 2,
+      }}
     >
-      <div className="text-center">
-        <h1 className="text-[8rem] font-extrabold tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-500 drop-shadow-lg">
+      <Paper
+        elevation={6}
+        sx={{
+          p: 6,
+          borderRadius: 4,
+          textAlign: 'center',
+          background: 'linear-gradient(135deg, #1f2937, #0f172a)',
+          color: 'white',
+          maxWidth: 500,
+        }}
+      >
+        <Typography
+          variant="h1"
+          sx={{
+            fontWeight: 'bold',
+            fontSize: { xs: '5rem', sm: '6rem', md: '8rem' },
+            background: 'linear-gradient(to right, #ec4899, #8b5cf6)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            mb: 2,
+          }}
+        >
           404
-        </h1>
-        <p className="text-2xl font-semibold mt-2 mb-6 text-gray-400">
+        </Typography>
+
+        <Typography variant="h6" sx={{ color: '#aaa', mb: 4 }}>
           Oops! The page you're looking for doesn't exist.
-        </p>
-        <Link
+        </Typography>
+
+        <Button
+          component={Link}
           to="/"
-          className="inline-block px-6 py-3 text-lg font-medium bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white rounded-2xl shadow-lg transition-all duration-300"
+          variant="contained"
+          sx={{
+            background: 'linear-gradient(to right, #3b82f6, #2563eb)',
+            color: 'white',
+            px: 4,
+            py: 1.5,
+            fontSize: '1rem',
+            borderRadius: 3,
+            boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+            textTransform: 'none',
+            '&:hover': {
+              background: 'linear-gradient(to right, #2563eb, #1d4ed8)',
+            },
+          }}
         >
           Go Back Home
-        </Link>
-      </div>
-    </motion.div>
+        </Button>
+      </Paper>
+    </Box>
   );
 };
 

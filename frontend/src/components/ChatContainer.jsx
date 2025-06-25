@@ -8,6 +8,7 @@ import {
   Typography,
   CircularProgress,
   Avatar,
+  useMediaQuery,
 } from '@mui/material';
 import { FaUserCircle, FaPaperPlane, FaTimes } from 'react-icons/fa';
 import { connectSocket, getSocket } from '../api';
@@ -16,6 +17,7 @@ const ChatContainer = () => {
   const dispatch = useDispatch();
   const { isMsgLoading, selectedUser, messages } = useSelector((s) => s.message);
   const { onlineUsers } = useSelector((s) => s.auth);
+  const isSmallScreen = useMediaQuery('(max-width:600px)');
 
   const subscribe = useCallback(() => {
     if (!selectedUser) return;
@@ -96,63 +98,64 @@ const ChatContainer = () => {
       }}
     >
       {/* Header */}
-     <Paper
-  elevation={4}
-  sx={{
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    px: 3,
-    py: 1.5,
-    borderRadius: 3,
-    background: 'rgba(255, 255, 255, 0.05)',
-    backdropFilter: 'blur(12px)',
-    border: '1px solid rgba(255, 255, 255, 0.08)',
-    boxShadow: '0 2px 10px rgba(0, 0, 0, 0.3)',
-  }}
->
-  <Box display="flex" alignItems="center">
-    <Avatar
-      sx={{
-        bgcolor: 'linear-gradient(to right, #6366f1, #9333ea)',
-        mr: 1,
-        width: 48,
-        height: 48,
-        background: 'linear-gradient(to right, #6366f1, #9333ea)',
-        boxShadow: '0 0 10px rgba(147, 51, 234, 0.5)',
-      }}
-    >
-      <FaUserCircle size={24} color="#fff" />
-    </Avatar>
-    <Box>
-      <Typography variant="subtitle1" sx={{ color: '#fff', fontWeight: 600 }}>
-        {selectedUser.name}
-      </Typography>
-      <Typography
-        variant="caption"
+      <Paper
+        elevation={4}
         sx={{
-          color: onlineUsers.includes(selectedUser._id) ? '#4ade80' : '#888',
-          fontWeight: 400,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          px: 3,
+          py: 1.5,
+          borderRadius: 3,
+          background: 'rgba(255, 255, 255, 0.05)',
+          backdropFilter: 'blur(12px)',
+          border: '1px solid rgba(255, 255, 255, 0.08)',
+          boxShadow: '0 2px 10px rgba(0, 0, 0, 0.3)',
         }}
       >
-        {onlineUsers.includes(selectedUser._id) ? 'Active now' : 'Offline'}
-      </Typography>
-    </Box>
-  </Box>
+        <Box display="flex" alignItems="center">
+          <Avatar
+            sx={{
+              mr: 1,
+              width: 48,
+              height: 48,
+              background: 'linear-gradient(to right, #6366f1, #9333ea)',
+              boxShadow: '0 0 10px rgba(147, 51, 234, 0.5)',
+            }}
+          >
+            <FaUserCircle size={24} color="#fff" />
+          </Avatar>
+          <Box>
+            <Typography variant="subtitle1" sx={{ color: '#fff', fontWeight: 600 }}>
+              {selectedUser.name}
+            </Typography>
+            <Typography
+              variant="caption"
+              sx={{
+                color: onlineUsers.includes(selectedUser._id) ? '#4ade80' : '#888',
+                fontWeight: 400,
+              }}
+            >
+              {onlineUsers.includes(selectedUser._id) ? 'Active now' : 'Offline'}
+            </Typography>
+          </Box>
+        </Box>
 
-  <FaTimes
-    size={20}
-    onClick={() => dispatch({ type: 'SELECT_USER', payload: null })}
-    style={{
-      cursor: 'pointer',
-      color: '#aaa',
-      transition: 'color 0.2s ease-in-out',
-    }}
-    onMouseOver={(e) => (e.currentTarget.style.color = '#ff5f5f')}
-    onMouseOut={(e) => (e.currentTarget.style.color = '#aaa')}
-  />
-</Paper>
-
+        {/* Close button for small screen */}
+        {isSmallScreen && (
+          <FaTimes
+            size={20}
+            onClick={() => dispatch({ type: 'SELECT_USER', payload: null })}
+            style={{
+              cursor: 'pointer',
+              color: '#aaa',
+              transition: 'color 0.2s ease-in-out',
+            }}
+            onMouseOver={(e) => (e.currentTarget.style.color = '#ff5f5f')}
+            onMouseOut={(e) => (e.currentTarget.style.color = '#aaa')}
+          />
+        )}
+      </Paper>
 
       {/* Messages */}
       <Box
