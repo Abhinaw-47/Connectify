@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-
+import { ToastContainer } from 'react-toastify';
 import './index.css';
 import Navbar from './components/Navbar';
 import Home from './components/Home';
@@ -16,6 +16,7 @@ function App() {
   return (
     <BrowserRouter>
       <AppContent />
+       <ToastContainer position="top-right" autoClose={3000} />
     </BrowserRouter>
   );
 }
