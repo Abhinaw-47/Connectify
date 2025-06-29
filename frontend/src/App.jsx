@@ -13,6 +13,7 @@ import { getPosts } from './actions/post';
 import { fetchUsers } from './actions/message';
 
 function App() {
+ 
   return (
     <BrowserRouter>
       <AppContent />
@@ -23,15 +24,17 @@ function App() {
 
 
 const AppContent = () => {
-  const dispatch = useDispatch();
-  const location = useLocation();
-  const [showForm, setShowForm] = useState(false);
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
-
+   const dispatch = useDispatch();
+  
   useEffect(() => {
     dispatch(getPosts());
     dispatch(fetchUsers());
   }, [dispatch]);
+  
+  const location = useLocation();
+  const [showForm, setShowForm] = useState(false);
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
+
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem('profile'));
