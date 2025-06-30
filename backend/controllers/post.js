@@ -7,7 +7,7 @@ export const getPosts=async(req,res)=>{
 try {
  
     const post=await PostMessage.find().sort({ _id: -1 })
-    console.log("hii");
+    
     res.status(200).json({data:post,currentPage:1,numberOfPages:1});
 } catch (error) {
     res.status(404).json({message:error.message});

@@ -7,7 +7,7 @@ import { keyframes } from '@mui/system';
 import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
-import { disconnectSocket, connectSocket } from '../api';
+import { disconnectSocket, connectSocket, fetchPosts } from '../api';
 
 
 const floatLogo = keyframes`
@@ -114,6 +114,11 @@ const Navbar = () => {
     disconnectSocket();
     navigate('/');
   };
+const clickLogo=()=> {
+  dispatch(fetchUsers())
+  // navigate('/posts');
+}
+  
 
   return (
     <Fade in={mounted} timeout={800}>
@@ -156,7 +161,7 @@ const Navbar = () => {
       >
        
         <Slide direction="right" in={mounted} timeout={800}>
-          <Link to="/" style={{ textDecoration: 'none' }}>
+          <Link to="/" onClick={clickLogo} style={{ textDecoration: 'none' }}>
             <Box
               sx={{
                 display: 'flex',
